@@ -9,12 +9,8 @@
 + Javax Mail API 1.6.2
 + Swagger UI 2.9.2
 
-----
-
 :memo: Microservice Documentation:
 http://localhost:8081/mail-service/swagger-ui.html
-
-----
 
 :rocket: How to Build the Project JAR and Run the Service:
 
@@ -25,8 +21,3 @@ http://localhost:8081/mail-service/swagger-ui.html
 3. Run JAR Creation and project build by running File "mvnw-project-mv-clean-package.cmd".
 
 4. Run the Service by running the File "mvnw-project-start-service.cmd"
-
-----
-
-:construction_worker: https://www.luishenriqueborgesviana.com/2022/03/mail-service-api.html
-
