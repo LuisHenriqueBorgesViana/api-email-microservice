@@ -1,0 +1,1 @@
+"C:\Program Files\Java\jdk-11.0.13\bin\java.exe" -jar "C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\target\app.mailservice-1.jar"

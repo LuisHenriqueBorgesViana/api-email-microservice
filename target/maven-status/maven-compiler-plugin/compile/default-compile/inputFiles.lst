@@ -1,0 +1,10 @@
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\MailServiceApplication.java
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\service\SendEmailService.java
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\service\ConfigurationServiceEmail.java
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\model\ServerSmtpModel.java
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\controller\EmailConfigController.java
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\model\SendEmailModel.java
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\util\EmailUtil.java
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\util\SwaggerConfigUtil.java
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\model\ReplyShippinglEmailModel.java
+C:\Users\luish\GitHub\git-devlhbv\Microservices\MailService\src\main\java\app\controller\SendEmailController.java

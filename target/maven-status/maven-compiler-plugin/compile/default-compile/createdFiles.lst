@@ -1,0 +1,11 @@
+app\MailServiceApplication.class
+app\model\ReplyShippinglEmailModel.class
+app\controller\SendEmailController.class
+app\model\SendEmailModel.class
+app\service\ConfigurationServiceEmail.class
+app\util\EmailUtil.class
+app\util\SwaggerConfigUtil.class
+app\util\EmailUtil$1.class
+app\controller\EmailConfigController.class
+app\service\SendEmailService.class
+app\model\ServerSmtpModel.class
