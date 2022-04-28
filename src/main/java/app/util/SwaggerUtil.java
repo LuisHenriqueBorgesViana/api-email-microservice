@@ -17,9 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfigUtil extends WebMvcConfigurationSupport {
+public class SwaggerUtil extends WebMvcConfigurationSupport {
 
-	private static final Logger Logger = LoggerFactory.getLogger(SwaggerConfigUtil.class);
+	private static final Logger Logger = LoggerFactory.getLogger(SwaggerUtil.class);
 
 	@Bean
 	public Docket greetingApi() {
