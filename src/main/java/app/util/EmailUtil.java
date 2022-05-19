@@ -31,35 +31,33 @@ public class EmailUtil {
 		
 		Logger.info("Creating the Send Email Reply Model.");				
 		
-		ReplyShippinglEmailModel ReplyShippingl = new ReplyShippinglEmailModel();
+		ReplyShippinglEmailModel replyShippingl = new ReplyShippinglEmailModel();
 		
 		Logger.info("Getting the SMTP Server Configuration Properties.");				
 		
-		EmailConfigController ConfigEmailController = new EmailConfigController();
+		EmailConfigController configEmailController = new EmailConfigController();
+						
+		ServerSmtpModel smptServer = configEmailController.getConfigServerSmtp();
 		
-		ServerSmtpModel SmptServer = new ServerSmtpModel();
-				
-		SmptServer = ConfigEmailController.getConfigServerSmtp();
+		Logger.info("Creating Session on SMTP " + "[Host: " + smptServer.getHostSmtp() + ", Port: " + smptServer.getPortSmtp() + "].");	
 		
-		Logger.info("Creating Session on SMTP " + "[Host: " + SmptServer.getHostSmtp() + ", Port: " + SmptServer.getPortSmtp() + "].");	
-		
-        Properties Propriedades = System.getProperties();
-        Propriedades.setProperty("mail.smtp.host", SmptServer.getHostSmtp());
-        Propriedades.put("mail.smtp.port", SmptServer.getPortSmtp()); 
-        Propriedades.put("mail.smtp.auth", SmptServer.getAuthSmtp());
-        Propriedades.put("mail.smtp.ssl.enable", SmptServer.getSslSmtp());
+        Properties systemProperties = System.getProperties();
+        systemProperties.setProperty("mail.smtp.host", smptServer.getHostSmtp());
+        systemProperties.put("mail.smtp.port", smptServer.getPortSmtp()); 
+        systemProperties.put("mail.smtp.auth", smptServer.getAuthSmtp());
+        systemProperties.put("mail.smtp.ssl.enable", smptServer.getSslSmtp());
         		
-		Logger.info("Authenticating to the Remote SMTP Server [User: " +  SmptServer.getUserSmtp() + ", Password: " + SmptServer.getUserPassword() + "].");		
+		Logger.info("Authenticating to the Remote SMTP Server [User: " +  smptServer.getUserSmtp() + ", Password: " + smptServer.getUserPassword() + "].");		
 		
-		String UserAuthentication     = SmptServer.getUserSmtp();
-		String PasswordAuthentication = SmptServer.getUserPassword();
+		String userAuthentication     = smptServer.getUserSmtp();
+		String passwordAuthentication = smptServer.getUserPassword();
 
-        Session SessionEmail = Session.getInstance(Propriedades, new javax.mail.Authenticator() {
+        Session sessionMail = Session.getInstance(systemProperties, new javax.mail.Authenticator() {
 
             @Override
             protected PasswordAuthentication getPasswordAuthentication() { 
                 
-                return new PasswordAuthentication(UserAuthentication, PasswordAuthentication); 
+                return new PasswordAuthentication(userAuthentication, passwordAuthentication); 
             }
         });
         
@@ -67,35 +65,35 @@ public class EmailUtil {
         
             Logger.info("Starting Email Message Creation.");		
         	
-			MimeMessage MessageEmail = new MimeMessage(SessionEmail);
-			MessageEmail.setFrom(new InternetAddress(SmptServer.getUserSmtp()));
-			MessageEmail.addRecipient(Message.RecipientType.TO, new InternetAddress(Recipient));
-			MessageEmail.setSubject(Subject, "UTF-8");
-			MessageEmail.setContent(Content, "text/html;charset=UTF-8");
+			MimeMessage messageEmail = new MimeMessage(sessionMail);
+			messageEmail.setFrom(new InternetAddress(smptServer.getUserSmtp()));
+			messageEmail.addRecipient(Message.RecipientType.TO, new InternetAddress(Recipient));
+			messageEmail.setSubject(Subject, "UTF-8");
+			messageEmail.setContent(Content, "text/html;charset=UTF-8");
             
             Logger.info("Email Ready to Send.");	
 
-            Transport.send(MessageEmail); 
+            Transport.send(messageEmail); 
             
             Logger.info("Email Successfully Sent to [Recipient: " + Recipient + ", Subject: " + Subject + ", Content: " + Content + "].");		            
             
-        	ReplyShippingl.setShippingStatus(true);
-        	ReplyShippingl.setRecipientShipping(Recipient);
-        	ReplyShippingl.setSubjectShipping(Subject);
-        	ReplyShippingl.setContentShipping(Content);
-        	ReplyShippingl.setReplyShipping("Sending the Email Successfully");
+        	replyShippingl.setShippingStatus(true);
+        	replyShippingl.setRecipientShipping(Recipient);
+        	replyShippingl.setSubjectShipping(Subject);
+        	replyShippingl.setContentShipping(Content);
+        	replyShippingl.setReplyShipping("Sending the Email Successfully");
                         
-        } catch (Error | MessagingException Error) {
+        } catch (Error | MessagingException errorSendMail) {
         	
             Logger.error("Error Occurred While Sending Email to Recipient.");		
         	
-        	ReplyShippingl.setShippingStatus(false);
-        	ReplyShippingl.setRecipientShipping(Recipient);
-        	ReplyShippingl.setSubjectShipping(Subject);
-        	ReplyShippingl.setContentShipping(Content);
-        	ReplyShippingl.setReplyShipping(ExceptionUtils.getRootCauseMessage(Error));            
+        	replyShippingl.setShippingStatus(false);
+        	replyShippingl.setRecipientShipping(Recipient);
+        	replyShippingl.setSubjectShipping(Subject);
+        	replyShippingl.setContentShipping(Content);
+        	replyShippingl.setReplyShipping(ExceptionUtils.getRootCauseMessage(errorSendMail));            
         }
         
-        return ReplyShippingl;
+        return replyShippingl;
 	}
 }

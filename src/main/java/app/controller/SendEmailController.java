@@ -10,7 +10,7 @@ public class SendEmailController {
 	
 	private static final Logger Logger = LoggerFactory.getLogger(SendEmailController.class);	
 	
-	EmailUtil UtilEmail = new EmailUtil();	
+	EmailUtil UtilEmail;
 	
 	public ReplyShippinglEmailModel sendEmailPlainTextController(String Recipient, String Subject, String Content) {
 		

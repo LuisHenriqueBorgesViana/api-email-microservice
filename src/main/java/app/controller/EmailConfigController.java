@@ -12,26 +12,26 @@ public class EmailConfigController {
 	
 	private static final Logger Logger = LoggerFactory.getLogger(EmailConfigController.class);		
 	
-	private static int    Port     = 465;
-	private static String Host     = "smtp.gmail.com";
-	private static String Auth     = "true";
-	private static String Ssl      = "true";
-	private static String User     = "email@gmail.com";
-	private static String Password = "qohouvxztheemqyp";
+	private static int    portSmtp     = 465;
+	private static String hostSmtp     = "smtp.gmail.com";
+	private static String authSmtp     = "true";
+	private static String sslSmtp      = "true";
+	private static String userSmtp     = "email@gmail.com";
+	private static String passwordSmtp = "qohouvxztheemqyp";
 
 	public ServerSmtpModel getConfigServerSmtp() {
 		
-		ServerSmtpModel SmptServer = new ServerSmtpModel();
+		ServerSmtpModel smptServer = new ServerSmtpModel();
 		
-		SmptServer.setPortSmtp(Port);
-		SmptServer.setHostSmtp(Host);
-		SmptServer.setAuthSmtp(Auth);
-		SmptServer.setSslSmtp(Ssl);
-		SmptServer.setUserSmtp(User);
-		SmptServer.setUserPassword(Password);
+		smptServer.setPortSmtp(portSmtp);
+		smptServer.setHostSmtp(hostSmtp);
+		smptServer.setAuthSmtp(authSmtp);
+		smptServer.setSslSmtp(sslSmtp);
+		smptServer.setUserSmtp(userSmtp);
+		smptServer.setUserPassword(passwordSmtp);
 		
 		Logger.info("SMTP Server settings have been loaded.");						
 		
-		return SmptServer;
+		return smptServer;
 	}
 }

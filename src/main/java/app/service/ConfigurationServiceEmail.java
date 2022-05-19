@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Configuration Email", description = "Endpoints Managing current Email Service Configuration", tags = "Configuration")
 public class ConfigurationServiceEmail {
 	
-	private static final Logger Logger = LoggerFactory.getLogger(SendEmailService.class);	
+	private static final Logger Logger = LoggerFactory.getLogger(ConfigurationServiceEmail.class);	
 	
 	EmailConfigController ConfigController = new EmailConfigController();
 
