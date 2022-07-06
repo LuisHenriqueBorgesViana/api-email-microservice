@@ -15,15 +15,13 @@
 
 	<packaging>jar</packaging>
 	<groupId>app</groupId>
-	<artifactId>app.mailService</artifactId>
-	<version>1</version>
-	<name>MailService</name>
-	<description>Microservice for Sending and/or Receiving Emails</description>
+	<artifactId>sending-email-service</artifactId>
+	<version>1.0</version>
+	<name>Sending Email Service</name>
+	<description>Microservice for Sending Email</description>
 
 	<properties>
-
 		<java.version>11</java.version>
-
 	</properties>
 
 	<dependencies>
@@ -56,13 +54,11 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.22</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
-			<version>1.6.2</version>
 		</dependency>
 
 		<dependency>
@@ -80,7 +76,6 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.12.0</version>
 		</dependency>
 		
 		<dependency>
@@ -106,6 +101,12 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.9.2</version>
 		</dependency>
+		
+        <dependency>
+          <groupId>commons-validator</groupId>
+          <artifactId>commons-validator</artifactId>
+          <version>1.7</version>
+        </dependency>		
 		
 	</dependencies>
 

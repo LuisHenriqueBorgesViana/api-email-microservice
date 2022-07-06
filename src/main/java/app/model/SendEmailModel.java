@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
 import lombok.Data;
 
 @Data
@@ -21,5 +20,5 @@ public class SendEmailModel {
 	
 	@JsonProperty("contentEmail")
 	@ApiModelProperty(notes = "Content Email", name = "Content Email", required = true, value = "Email Text Content", example= "Email Content", position = 2)		
-	private String contentEmail;
+	private String contentEmail;	
 }

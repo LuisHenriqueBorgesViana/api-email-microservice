@@ -15,83 +15,78 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import app.controller.EmailConfigController;
-
+import app.model.EmailModel;
 import app.model.ReplyShippinglEmailModel;
-import app.model.ServerSmtpModel;
 
 import lombok.Data;
 
 @Data
 public class EmailUtil {
 
-	private static final Logger Logger = LoggerFactory.getLogger(EmailUtil.class);	
+	private static final Logger loggerFactory = LoggerFactory.getLogger(EmailUtil.class);	
 
-	public ReplyShippinglEmailModel sendEmailPlainText(String Recipient, String Subject, String Content) {
+	public ReplyShippinglEmailModel sendEmail(EmailModel emailObject) {
 		
-		Logger.info("Creating the Send Email Reply Model.");				
+		loggerFactory.info("Creating the Send Email Reply Model.");				
 		
 		ReplyShippinglEmailModel replyShippingl = new ReplyShippinglEmailModel();
-		
-		Logger.info("Getting the SMTP Server Configuration Properties.");				
-		
-		EmailConfigController configEmailController = new EmailConfigController();
-						
-		ServerSmtpModel smptServer = configEmailController.getConfigServerSmtp();
-		
-		Logger.info("Creating Session on SMTP " + "[Host: " + smptServer.getHostSmtp() + ", Port: " + smptServer.getPortSmtp() + "].");	
-		
+
+		loggerFactory.info("Creating Session on SMTP [Host: {}, Port: {}].", emailObject.getServerSmtp().getHostSmtp(), emailObject.getServerSmtp().getPortSmtp());
+				
         Properties systemProperties = System.getProperties();
-        systemProperties.setProperty("mail.smtp.host", smptServer.getHostSmtp());
-        systemProperties.put("mail.smtp.port", smptServer.getPortSmtp()); 
-        systemProperties.put("mail.smtp.auth", smptServer.getAuthSmtp());
-        systemProperties.put("mail.smtp.ssl.enable", smptServer.getSslSmtp());
-        		
-		Logger.info("Authenticating to the Remote SMTP Server [User: " +  smptServer.getUserSmtp() + ", Password: " + smptServer.getUserPassword() + "].");		
-		
-		String userAuthentication     = smptServer.getUserSmtp();
-		String passwordAuthentication = smptServer.getUserPassword();
+        systemProperties.setProperty("mail.smtp.host", emailObject.getServerSmtp().getHostSmtp());
+        systemProperties.put("mail.smtp.port", emailObject.getServerSmtp().getPortSmtp()); 
+        systemProperties.put("mail.smtp.auth", emailObject.getServerSmtp().isAuthSmtp());
+        systemProperties.put("mail.smtp.ssl.enable", emailObject.getServerSmtp().isSslSmtp());
+
+  		loggerFactory.info("Authenticating to the Remote SMTP Server [User: {}, Password: {}].", emailObject.getServerSmtp().getUserSmtp(), emailObject.getServerSmtp().getUserPasswordSmtp());
 
         Session sessionMail = Session.getInstance(systemProperties, new javax.mail.Authenticator() {
 
             @Override
             protected PasswordAuthentication getPasswordAuthentication() { 
                 
-                return new PasswordAuthentication(userAuthentication, passwordAuthentication); 
+                return new PasswordAuthentication(emailObject.getServerSmtp().getUserSmtp(), emailObject.getServerSmtp().getUserPasswordSmtp()); 
             }
         });
         
         try {
         
-            Logger.info("Starting Email Message Creation.");		
+            loggerFactory.info("Starting Email Message Creation.");		
         	
 			MimeMessage messageEmail = new MimeMessage(sessionMail);
-			messageEmail.setFrom(new InternetAddress(smptServer.getUserSmtp()));
-			messageEmail.addRecipient(Message.RecipientType.TO, new InternetAddress(Recipient));
-			messageEmail.setSubject(Subject, "UTF-8");
-			messageEmail.setContent(Content, "text/html;charset=UTF-8");
+			messageEmail.setFrom(new InternetAddress(emailObject.getServerSmtp().getUserSmtp()));
+			messageEmail.addRecipient(Message.RecipientType.TO, new InternetAddress(emailObject.getServerSmtp().getUserSmtp()));
+			messageEmail.setSubject(emailObject.getSendEmail().getSubjectEmail(), "UTF-8");
+			messageEmail.setContent(emailObject.getSendEmail().getContentEmail(), "text/html;charset=UTF-8");
             
-            Logger.info("Email Ready to Send.");	
+            loggerFactory.info("Email Ready to Send.");	
 
-            Transport.send(messageEmail); 
+            //Transport.send(messageEmail); 
             
-            Logger.info("Email Successfully Sent to [Recipient: " + Recipient + ", Subject: " + Subject + ", Content: " + Content + "].");		            
+    		loggerFactory.info("Email Successfully Sent to [Recipient: {}, : Subject: {}, Content: {}].", emailObject.getSendEmail().getRecipientEmail(), emailObject.getSendEmail().getSubjectEmail(), emailObject.getSendEmail().getContentEmail());            
             
+    		replyShippingl.setIdentificationKey(emailObject.getIdentificationKey());
         	replyShippingl.setShippingStatus(true);
-        	replyShippingl.setRecipientShipping(Recipient);
-        	replyShippingl.setSubjectShipping(Subject);
-        	replyShippingl.setContentShipping(Content);
+        	replyShippingl.setRecipientShipping(emailObject.getSendEmail().getRecipientEmail());
+        	replyShippingl.setSubjectShipping(emailObject.getSendEmail().getSubjectEmail());
+        	replyShippingl.setContentShipping(emailObject.getSendEmail().getContentEmail());
         	replyShippingl.setReplyShipping("Sending the Email Successfully");
+        	
+    		loggerFactory.info("Finished Sending Email Key {}", emailObject.getIdentificationKey());		
                         
-        } catch (Error | MessagingException errorSendMail) {
+        } catch (MessagingException errorSendMail) {
         	
-            Logger.error("Error Occurred While Sending Email to Recipient.");		
-        	
+            loggerFactory.error("Error Occurred While Sending Email to Recipient.");
+            
+    		replyShippingl.setIdentificationKey(emailObject.getIdentificationKey());
         	replyShippingl.setShippingStatus(false);
-        	replyShippingl.setRecipientShipping(Recipient);
-        	replyShippingl.setSubjectShipping(Subject);
-        	replyShippingl.setContentShipping(Content);
-        	replyShippingl.setReplyShipping(ExceptionUtils.getRootCauseMessage(errorSendMail));            
+        	replyShippingl.setRecipientShipping(emailObject.getSendEmail().getRecipientEmail());
+        	replyShippingl.setSubjectShipping(emailObject.getSendEmail().getSubjectEmail());
+        	replyShippingl.setContentShipping(emailObject.getSendEmail().getContentEmail());
+        	replyShippingl.setReplyShipping(ExceptionUtils.getRootCauseMessage(errorSendMail));   
+        	
+    		loggerFactory.info("Finished Sending Email Key {}", emailObject.getIdentificationKey());		        	
         }
         
         return replyShippingl;

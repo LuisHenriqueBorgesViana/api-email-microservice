@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Data;
 
 @Data
@@ -20,17 +21,17 @@ public class ServerSmtpModel {
 
 	@JsonProperty("authSmtp")
 	@ApiModelProperty(notes = "Host Smtp", name = "Host Smtp", required = true, value = "Set if Service Auth is active", example = "true", position = 2)		
-	private String authSmtp;
+	private boolean authSmtp;
 	
 	@JsonProperty("sslSmtp")
 	@ApiModelProperty(notes = "Ssl Smtp", name = "Host Smtp", required = true, value = "Set if Service SSL is Enabled", example = "true", position = 3)		
-	private String sslSmtp;
+	private boolean sslSmtp;
 	
 	@JsonProperty("userSmtp")
 	@ApiModelProperty(notes = "User Smtp", name = "User Smtp", required = true, value = "Service Access and Authentication User", example = "email@gmail.com", position = 4)		
 	private String userSmtp;
 
-	@JsonProperty("userPassword")
-	@ApiModelProperty(notes = "User Password", name = "User Password", required = true, value = "Service Authentication User Access Password", example = "qohouvxztheemqypx", position = 5)			
-	private String userPassword;	
+	@JsonProperty("userPasswordSmtp")
+	@ApiModelProperty(notes = "User Password Smtp", name = "User Password Smtp", required = true, value = "Service Authentication User Access Password", example = "qohouvxztheemqypx", position = 5)			
+	private String userPasswordSmtp;	
 }

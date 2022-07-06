@@ -11,6 +11,10 @@ import lombok.Data;
 @ApiModel
 public class ReplyShippinglEmailModel {
 	
+	@JsonProperty("identificationKey")
+	@ApiModelProperty(notes = "Identification Key", name = "Identification Key", required = true, value = "Send Key that uniquely identifies the email", example= "EMAIL-123", position = 0)
+	private String identificationKey;	
+	
 	@JsonProperty("shippingStatus")
 	@ApiModelProperty(notes = "Shipping Status", name = "Shipping Status", required = true, value = "Identifies whether the Email was Sent or Not", example= "true", position = 0)
 	private boolean shippingStatus;

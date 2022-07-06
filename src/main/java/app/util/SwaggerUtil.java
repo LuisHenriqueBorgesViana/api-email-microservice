@@ -2,6 +2,7 @@ package app.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -19,12 +20,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerUtil extends WebMvcConfigurationSupport {
 
-	private static final Logger Logger = LoggerFactory.getLogger(SwaggerUtil.class);
+	private static final Logger loggerFactory = LoggerFactory.getLogger(SwaggerUtil.class);
 
 	@Bean
 	public Docket greetingApi() {
 		
-		Logger.info("[EmailService] - The Documentation Query was performed through the Swagger API.");				
+		loggerFactory.info("[EmailService] - The Documentation Query was performed through the Swagger API.");				
 		
 		return new Docket(DocumentationType.SWAGGER_2)
 				   .select()
@@ -36,7 +37,7 @@ public class SwaggerUtil extends WebMvcConfigurationSupport {
 	private ApiInfo metaData() {
 
 		return new ApiInfoBuilder()
-				   .title("MailService API")
+				   .title("Microservice for Sending Email")
 				   .description("Microservice for Sending and Receiving Emails")
 				   .version("1.0.0")
 				   .license("Apache License Version 2.0")
