@@ -15,6 +15,8 @@ public class MailServiceApplication {
 		
 		SpringApplication.run(MailServiceApplication.class, args);
 		
-		loggerFactory.info("Microservice started successfully.");				
+		loggerFactory.info("Microservice started successfully.");	
+		
+		
 	}
 }

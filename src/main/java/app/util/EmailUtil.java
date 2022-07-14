@@ -56,15 +56,15 @@ public class EmailUtil {
         	
 			MimeMessage messageEmail = new MimeMessage(sessionMail);
 			messageEmail.setFrom(new InternetAddress(emailObject.getServerSmtp().getUserSmtp()));
-			messageEmail.addRecipient(Message.RecipientType.TO, new InternetAddress(emailObject.getServerSmtp().getUserSmtp()));
+			messageEmail.addRecipient(Message.RecipientType.TO, new InternetAddress(emailObject.getSendEmail().getRecipientEmail()));
 			messageEmail.setSubject(emailObject.getSendEmail().getSubjectEmail(), "UTF-8");
 			messageEmail.setContent(emailObject.getSendEmail().getContentEmail(), "text/html;charset=UTF-8");
             
-            loggerFactory.info("Email Ready to Send.");	
+            loggerFactory.info("Email ready and being forwarded to recipient.");	
 
-            //Transport.send(messageEmail); 
+            Transport.send(messageEmail); 
             
-    		loggerFactory.info("Email Successfully Sent to [Recipient: {}, : Subject: {}, Content: {}].", emailObject.getSendEmail().getRecipientEmail(), emailObject.getSendEmail().getSubjectEmail(), emailObject.getSendEmail().getContentEmail());            
+    		loggerFactory.info("Email Successfully Sent to [Recipient: {}, Subject: {}, Content: {}].", emailObject.getSendEmail().getRecipientEmail(), emailObject.getSendEmail().getSubjectEmail(), emailObject.getSendEmail().getContentEmail());            
             
     		replyShippingl.setIdentificationKey(emailObject.getIdentificationKey());
         	replyShippingl.setShippingStatus(true);

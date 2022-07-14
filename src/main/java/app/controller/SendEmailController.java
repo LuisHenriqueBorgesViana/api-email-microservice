@@ -21,12 +21,12 @@ public class SendEmailController {
 				
 		loggerFactory.info("Started Execution of Text Email Send Controller.");		
 								
-		ReplyShippinglEmailModel shippinglEmail = validateValuesObjectEmail(emailObject);		
+		//ReplyShippinglEmailModel shippinglEmail = validateValuesObjectEmail(emailObject);		
 		
-		if(!shippinglEmail.isShippingStatus()) {
+		//if(!shippinglEmail.isShippingStatus()) {
 			
-			return shippinglEmail;
-		} 
+			//return shippinglEmail;
+		//} 
 		
 		return utilEmail.sendEmail(emailObject);
 	}
